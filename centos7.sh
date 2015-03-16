@@ -21,7 +21,9 @@ yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpn
 #install httpd server to create APACHE USER TO RUN PHP-FPM
 #depencendies for nginx
 #yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
-yum install httpd php -y 
+yum install httpd php php-xml php-mbstring php-mcrypt php-pdo -y 
+yum install php-devel php-pear mysql-devel httpd-devel -y
+#pecl install pdo
 echo configuracion basica
 read name
 
@@ -276,6 +278,13 @@ service php56 start
 service nginx start
 service nginx restart
 
+###install composer
+cd /opt/perfectserver/nginxsource/
+curl -sS https://getcomposer.org/installer | php  
+mv composer.phar /usr/local/bin/composer  
+echo composer installed
+#install larvel installer globally
+composer global require "laravel/installer=~1.1"
 #disable firewalld
 systemctl disable firewalld
 systemctl stop firewalld
