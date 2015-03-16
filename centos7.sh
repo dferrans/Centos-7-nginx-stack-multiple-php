@@ -217,3 +217,6 @@ service php56 start
 service nginx start
 service nginx restart
 
+#disable firewalld
+systemctl disable firewalld
+systemctl stop firewalld
