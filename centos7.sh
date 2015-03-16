@@ -22,7 +22,7 @@ yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpn
 #depencendies for nginx
 #yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
 yum install httpd -y 
-cd /opt/perfectserver/
+
 echo instalacion de dependencias
 date >> servertime.txt
 #uncompress 5.3 version.
