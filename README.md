@@ -10,3 +10,24 @@ This script will help you to set up.
 4) Will use Fedora epel respository.
 5) Maria db.
 6) Phpmyadmin.
+
+REQUIREMENTS:
+
+Have a CENTOS 7 minimal installation with SSH access.
+you must have a git 1.6+
+you must have root access.
+
+
+Instructions:
+
+download this git respository into the /opt/folder
+
+like this:
+
+git clone https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git webserversetup
+
+(this will create a folder in /opt/webserversetup that will contain this repo)
+
+cd into that directory
+
+cd webservice setup.
