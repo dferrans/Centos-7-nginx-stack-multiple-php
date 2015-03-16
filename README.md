@@ -16,6 +16,7 @@ REQUIREMENTS:
 Have a CENTOS 7 minimal installation with SSH access.
 you must have a git 1.6+
 you must have root access.
+you must have Development tools group (yum group install "Development Tools")
 
 
 Instructions:
@@ -30,4 +31,7 @@ git clone https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git webs
 
 cd into that directory
 
-cd webservice setup.
+make sure that this folder has 777 rights 
+
+and execute ./centos7.sh
+
