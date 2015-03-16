@@ -1,0 +1,27 @@
+server {
+    listen  80;
+
+    server_name test.com www.test.com;
+
+    location / {
+        root  /var/www/html/test;
+        index  index.php index.html index.htm;
+        try_files $uri $uri/ =404;
+    }
+
+    error_page  500 502 503 504  /50x.html;
+    location = /50x.html {
+        root  /usr/share/nginx/html/test;
+    }
+	
+	 location ~ \.php$ {
+            root           /var/www/html/test;
+            fastcgi_pass   127.0.0.1:9056;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+	
+	
+	
+}

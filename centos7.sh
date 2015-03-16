@@ -15,7 +15,7 @@ yum install epel-release -y
 #updating again the system
 yum update -y
 #install php depencencies
-yum install mariadb-server mariadb-client wget curl -y
+yum install mariadb-server mariadb-client wget curl nano -y
 #install build depencencies for php
 yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpng-devel libXpm-devel gmp-devel libc-client-devel openldap-devel unixODBC-devel postgresql-devel sqlite-devel net-snmp-devel libxslt-devel pcre-devel mysql-devel postgresql-devel libxslt-devel mariadb-client freetype-devel.x86_64 -y
 #install httpd server to create APACHE USER TO RUN PHP-FPM
@@ -151,138 +151,23 @@ cd nginx-1.7.10/
 --with-file-aio                       \
 --with-http_realip_module             \
 --without-http_scgi_module            \
---without-http_uwsgi_module           \
---with-http_fastcgi_module
+--without-http_uwsgi_module           
+
 
 echo se configuro
 sleep 10
 
 make && make install
-
-
-
 # Add The Reconnect Script Into Forge Directory
-
-cat > /etc/init.d/nginx << EOF
-#!/bin/sh
-#
-# nginx - this script starts and stops the nginx daemon
-#
-# chkconfig:   - 85 15
-# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \
-#               proxy and IMAP/POP3 proxy server
-# processname: nginx
-# config:      /etc/nginx/nginx.conf
-# pidfile:     /var/run/nginx.pid
-# user:        nginx
-
-# Source function library.
-. /etc/rc.d/init.d/functions
-
-# Source networking configuration.
-. /etc/sysconfig/network
-
-# Check that networking is up.
-[ "$NETWORKING" = "no" ] && exit 0
-
-nginx="/usr/sbin/nginx"
-prog=$(basename $nginx)
-
-NGINX_CONF_FILE="/etc/nginx/nginx.conf"
-
-lockfile=/var/run/nginx.lock
-
-start() {
-    [ -x $nginx ] || exit 5
-    [ -f $NGINX_CONF_FILE ] || exit 6
-    echo -n $"Starting $prog: "
-    daemon $nginx -c $NGINX_CONF_FILE
-    retval=$?
-    echo
-    [ $retval -eq 0 ] && touch $lockfile
-    return $retval
-}
-
-stop() {
-    echo -n $"Stopping $prog: "
-    killproc $prog -QUIT
-    retval=$?
-    echo
-    [ $retval -eq 0 ] && rm -f $lockfile
-    return $retval
-}
-
-restart() {
-    configtest || return $?
-    stop
-    start
-}
-
-reload() {
-    configtest || return $?
-    echo -n $"Reloading $prog: "
-    killproc $nginx -HUP
-    RETVAL=$?
-    echo
-}
-
-force_reload() {
-    restart
-}
-
-configtest() {
-  $nginx -t -c $NGINX_CONF_FILE
-}
-
-rh_status() {
-    status $prog
-}
-
-rh_status_q() {
-    rh_status >/dev/null 2>&1
-}
-
-case "$1" in
-    start)
-        rh_status_q && exit 0
-        $1
-        ;;
-    stop)
-        rh_status_q || exit 0
-        $1
-        ;;
-    restart|configtest)
-        $1
-        ;;
-    reload)
-        rh_status_q || exit 7
-        $1
-        ;;
-    force-reload)
-        force_reload
-        ;;
-    status)
-        rh_status
-        ;;
-    condrestart|try-restart)
-        rh_status_q || exit 0
-            ;;
-    *)
-        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"
-        exit 2
-esac
-EOF
-
+cd /opt/perfectserver/nginxsource/
+cat defaultconfig.txt > /etc/init.d/nginx 
 echo se configuro archivo de inicio del nginx
 sleep 5
-
 chmod +x /etc/init.d/nginx
 
 #add nginx to service
 chkconfig --add nginx
 chkconfig --level 345 nginx on
-
-
 ## seed de la configuracion del bucket
 sed -i 's/^types_hash_bucket_size.*/types_hash_bucket_size 64;/' /etc/nginx/nginx.conf
 
@@ -304,3 +189,27 @@ chkconfig --level 345 php55 on
 #
 chkconfig --add php56
 chkconfig --level 345 php56 on
+####TODO###
+###THE DEFAULT NGINX X SHOULD ME RENAMED.
+### it should be changed to the default httpd folder /var/www/html/
+####it should include a folder to add virtual hosts. /etc/nginx/conf.d/nginx
+####it should Have at least 5 examples. of virtual host with different configuration
+mkdir /etc/nginx/sites-available
+mkdir /etc/nginx/sites-enabled
+cd /opt/perfectserver/nginxsource/
+cat nginxdefault.txt > /etc/nginx/nginx.conf
+#configurar la carpeta de los hosts por defecto
+cd /opt/perfectserver/nginxsource/
+mkdir /var/www/html/test
+#Create file into folder 
+cat nginxhost.txt > /etc/nginx/sites-enabled/test.conf
+
+
+### iniciar todos los servicios
+service php53 start
+service php54 start
+service php55 start
+service php56 start
+service nginx start
+service nginx stop
+service nginx start
