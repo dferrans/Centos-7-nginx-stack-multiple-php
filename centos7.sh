@@ -268,7 +268,7 @@ chmod 777 -R /var/www/html/test3/
 chmod 777 -R /var/www/html/test4/
 #Create file into folder 
 
-
+ and 
 
 ### iniciar todos los servicios
 service php53 start
