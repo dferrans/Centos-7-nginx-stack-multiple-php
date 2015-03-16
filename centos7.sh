@@ -194,15 +194,19 @@ chkconfig --level 345 php56 on
 ### it should be changed to the default httpd folder /var/www/html/
 ####it should include a folder to add virtual hosts. /etc/nginx/conf.d/nginx
 ####it should Have at least 5 examples. of virtual host with different configuration
+cd /opt/perfectserver/nginxsource/
 mkdir /etc/nginx/sites-available
 mkdir /etc/nginx/sites-enabled
 cd /opt/perfectserver/nginxsource/
 cat nginxdefault.txt > /etc/nginx/nginx.conf
+cat nginxhost.txt > /etc/nginx/sites-enabled/test.conf
 #configurar la carpeta de los hosts por defecto
 cd /opt/perfectserver/nginxsource/
 mkdir /var/www/html/test
+echo "<?php phpinfo();?>" > /var/www/html/test/index.php
+chmod 777 -R /var/www/html/test/
 #Create file into folder 
-cat nginxhost.txt > /etc/nginx/sites-enabled/test.conf
+
 
 
 ### iniciar todos los servicios
@@ -211,5 +215,5 @@ service php54 start
 service php55 start
 service php56 start
 service nginx start
-service nginx stop
-service nginx start
+service nginx restart
+
