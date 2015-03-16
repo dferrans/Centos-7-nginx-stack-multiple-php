@@ -160,7 +160,7 @@ sleep 10
 make && make install
 # Add The Reconnect Script Into Forge Directory
 cd /opt/perfectserver/nginxsource/
-cat defaultconfig.txt > /etc/init.d/nginx 
+cat nginxstart.txt > /etc/init.d/nginx 
 echo se configuro archivo de inicio del nginx
 sleep 5
 chmod +x /etc/init.d/nginx
