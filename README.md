@@ -1,37 +1,36 @@
-# Centos-7-nginx-stack-multiple-php
-Script stack, to configure centos 7 with nginx, php versions from 5.3 up to the latest version using php 5.6. the ideal is to configure CENTOS with a simple bash script
+# Centos-7-nginx stack multiple php versions 
+
+Basic useful feature list:
+
+ * LEMP Stack
+ * Php versions (5.3, 5.4, 5.5, 5.6).
+ * Maria-db (mysql opensource)
+ * Composer.
+ * Grunt
+ * Developer tools
 
 
-This script will help you to set up.
-
-1) Apache server.
-2) Nginx
-3) PHP (5.33, 5.4, 5.5, 5,6 phpfpm on local port)
-4) Will use Fedora epel respository.
-5) Maria db.
-6) Phpmyadmin.
 
 REQUIREMENTS:
 
-Have a CENTOS 7 minimal installation with SSH access.
-you must have a git 1.6+
-you must have root access.
-you must have Development tools group (yum group install "Development Tools")
+Look, a list!
 
+ * CENTOS 7 minimal installation
+ * SSH access.
+ * git 1.6+
+ * git 1.6+
+ * git 1.6+
+ * git 1.6+
 
-Instructions:
+ssh into your machine and cd to /opt/
 
-download this git respository into the /opt/folder
+```javascript
+git clone https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git perfectserver
+chmod 775 -R perfectserver && cd perfectserver
+./centos7.sh
 
-like this:
+```
+the .sh will to all the setup for you. this could take up to 1 hour. (installing all packages and libraries)
 
-git clone https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git webserversetup
-
-(this will create a folder in /opt/webserversetup that will contain this repo)
-
-cd into that directory
-
-make sure that this folder has 777 rights 
-
-and execute ./centos7.sh
+Hope this repo can  be usefull to your current deployments
 

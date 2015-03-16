@@ -1,14 +1,104 @@
 #!/bin/bash
 #Making sure that system is up-to-date
+cd /opt/perfectserver/
+date > servertime.txt
+echo This script will download all the depencencies to build php from source. depending on your system resources it could take up to 30 minutes.
+echo Relax and take a cup of coffee.
+sleep 10
+yum update -y
+#installing network tools (minimal install does not have it)
+yum install net-tools
+#installing epel repo
+yum install epel-release -y
+#updating again the system
+yum update -y
+#installing development tools
+yum group install "Development Tools" -y
+#install php depencencies
+yum install mariadb-server mariadb-client wget curl nano -y
+#install build depencencies for php
+yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpng-devel libXpm-devel gmp-devel libc-client-devel openldap-devel unixODBC-devel postgresql-devel sqlite-devel net-snmp-devel libxslt-devel pcre-devel mysql-devel postgresql-devel libxslt-devel mariadb-client freetype-devel.x86_64 libxml2-devel -y
+#install httpd server to create APACHE USER TO RUN PHP-FPM
+#depencendies for nginx
+#yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
+yum install httpd php -y 
+echo configuracion basica
+read name
 
+#inicio del php 5.3.29
+####################################
+cd /opt/perfectserver/phpsources/
+tar xzvf php-5.3.29.tar.gz
+chmod 777 -R php-5.3.29/
+cd php-5.3.29/
 
+./configure --prefix=/opt/php53 \
+--with-pdo-pgsql \
+--with-zlib-dir \
+--with-freetype-dir \
+--enable-mbstring \
+--with-libxml-dir=/usr \
+--enable-soap \
+--enable-calendar \
+--with-curl \
+--with-mcrypt \
+--with-zlib \
+--with-gd \
+--with-pgsql \
+--disable-rpath \
+--enable-inline-optimization \
+--with-bz2 \
+--with-zlib \
+--enable-sockets \
+--enable-sysvsem \
+--enable-sysvshm \
+--enable-pcntl \
+--enable-mbregex \
+--enable-exif \
+--enable-bcmath \
+--with-mhash \
+--enable-zip \
+--with-pcre-regex \
+--with-mysql \
+--with-pdo-mysql \
+--with-mysqli \
+--with-jpeg-dir=/usr \
+--with-png-dir=/usr \
+--enable-gd-native-ttf \
+--with-openssl \
+--with-fpm-user=apache \
+--with-fpm-group=apache \
+--with-libdir=lib64     \
+--enable-ftp \
+--with-kerberos \
+--with-gettext \
+--with-xmlrpc \
+--with-xsl \
+--enable-opcache \
+--enable-fpm
+######Make and install
+#make and install
+make && make install
+echo Build completo
+#copiando archivos para iniciar el servicio
+cd sapi/fpm
+cp init.d.php-fpm /etc/init.d/php53
+chmod 775 /etc/init.d/php53
+sleep 10
+mv /opt/php53/etc/php-fpm.conf.default /opt/php53/etc/php-fpm.conf 
+sed -i 's/^listen =.*/listen = 127.0.0.1:9053/' /opt/php53/etc/php-fpm.conf
+#compilacion de php 5.3 listo.
+echo PHP 53 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
+read name
+
+###########php5.4##########################################################
+###########################################################################
 cd /opt/perfectserver/phpsources/
 tar xzvf php-5.4.38.tar.gz
 chmod 777 -R php-5.4.38/
 cd php-5.4.38/
-###########php5.4#############
-#compile php 5.4.38
 ./configure --prefix=/opt/php54 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+
 echo listo para build
 sleep 10
 #make and install
@@ -28,6 +118,7 @@ date >> servertime.txt
 echo se compilo php 5.4
 read time
 #########################################
+##########################################
 #build de php 5.5
 cd /opt/perfectserver/phpsources/
 tar xzvf php-5.5.5.tar.gz
@@ -51,6 +142,8 @@ sed -i 's/^listen =.*/listen = 127.0.0.1:9055/' /opt/php55/etc/php-fpm.conf
 cd /opt/perfectserver/
 echo php5.5 fin
 date >> servertime.txt
+echo PHP 55 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
+read name
 #######################
 #######php 5.6#########
 cd /opt/perfectserver/phpsources/
@@ -75,6 +168,8 @@ sed -i 's/^listen =.*/listen = 127.0.0.1:9056/' /opt/php56/etc/php-fpm.conf
 cd /opt/perfectserver/
 echo php5.6 fin
 date >> servertime.txt
+echo PHP 56 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
+read name
 #############Installing NGINX#################
 ####VERSION 1.7.10############################
 #echo Please, enter your name
@@ -151,12 +246,24 @@ mkdir /etc/nginx/sites-available
 mkdir /etc/nginx/sites-enabled
 cd /opt/perfectserver/nginxsource/
 cat nginxdefault.txt > /etc/nginx/nginx.conf
-cat nginxhost.txt > /etc/nginx/sites-enabled/test.conf
+cat nginxhost53.txt > /etc/nginx/sites-enabled/test1.conf
+cat nginxhost54.txt > /etc/nginx/sites-enabled/test2.conf
+cat nginxhost55.txt > /etc/nginx/sites-enabled/test3.conf
+cat nginxhost56.txt > /etc/nginx/sites-enabled/test4.conf
 #configurar la carpeta de los hosts por defecto
 cd /opt/perfectserver/nginxsource/
-mkdir /var/www/html/test
-echo "<?php phpinfo();?>" > /var/www/html/test/index.php
-chmod 777 -R /var/www/html/test/
+mkdir /var/www/html/test1
+mkdir /var/www/html/test2
+mkdir /var/www/html/test3
+mkdir /var/www/html/test4
+echo "<?php phpinfo();?>" > /var/www/html/test1/index.php
+echo "<?php phpinfo();?>" > /var/www/html/test2/index.php
+echo "<?php phpinfo();?>" > /var/www/html/test3/index.php
+echo "<?php phpinfo();?>" > /var/www/html/test4/index.php
+chmod 777 -R /var/www/html/test1/
+chmod 777 -R /var/www/html/test2/
+chmod 777 -R /var/www/html/test3/
+chmod 777 -R /var/www/html/test4/
 #Create file into folder 
 
 
