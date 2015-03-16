@@ -1,43 +1,306 @@
 #!/bin/bash
 #Making sure that system is up-to-date
-#yum update -y
+cd /opt/perfectserver/
+date > servertime.txt
+echo This script will download all the depencencies to build php from source. depending on your system resources it could take up to 30 minutes.
+echo Relax and take a cup of coffee.
+sleep 10
+yum update -y
 #installing network tools (minimal install does not have it)
-#yum install net-tools
+yum install net-tools
 #installing development tools
-#yum group install "Development Tools"
+yum group install "Development Tools" -y
 #installing epel repo
-#yum install epel-release -y
+yum install epel-release -y
 #updating again the system
-#yum update -y
+yum update -y
 #install php depencencies
-#yum install mariadb-server mariadb-client -y
+yum install mariadb-server mariadb-client wget curl -y
 #install build depencencies for php
-#yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpng-devel libXpm-devel gmp-devel libc-client-devel openldap-devel unixODBC-devel postgresql-devel sqlite-devel net-snmp-devel libxslt-devel pcre-devel mysql-devel postgresql-devel libxslt-devel mariadb-client freetype-devel.x86_64 -y
-
+yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpng-devel libXpm-devel gmp-devel libc-client-devel openldap-devel unixODBC-devel postgresql-devel sqlite-devel net-snmp-devel libxslt-devel pcre-devel mysql-devel postgresql-devel libxslt-devel mariadb-client freetype-devel.x86_64 -y
 #install httpd server to create APACHE USER TO RUN PHP-FPM
-#yum install httpd -y 
+#depencendies for nginx
+#yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
+yum install httpd -y 
+cd /opt/perfectserver/
+echo instalacion de dependencias
+date >> servertime.txt
 #uncompress 5.3 version.
-
-# libssl-dev
-pwd
-cd phpsources/
-pwd
-#tar xzvf php-5.5.3.tar.gz
-#chmod 777 -R php-5.5.3/
-cd php-5.5.3
-
+cd /opt/perfectserver/phpsources/
+tar xzvf php-5.5.3.tar.gz
+chmod 777 -R php-5.5.3/
+cd php-5.5.3/
 #configure php 5.3
-#./configure --prefix=/opt/php53 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
-
-#make and install
-#make && make install
+./configure --prefix=/opt/php53 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+# echo Php configure succesfull, now we are going to build it and install php 5.5.3
+make && make install
 #TODO CHANGE PORT
-#mv /opt/php53/etc/php-fpm.conf.default /opt/php53/etc/php-fpm.conf 
+mv /opt/php53/etc/php-fpm.conf.default /opt/php53/etc/php-fpm.conf 
+# echo Moving php fpm configuration to etc init folder
 # se configuro php y instalo en el directorio
 pwd
-#cd sapi/fpm
-#cp init.d.php-fpm /etc/init.d/php53
+cd sapi/fpm
+cp init.d.php-fpm /etc/init.d/php53
 #ls -al
-#chmod 775 /etc/init.d/php53
-#cd 
-pwd
+chmod 775 /etc/init.d/php53
+#informacion para modificar el archivo
+sed -i 's/^listen =.*/listen = 127.0.0.1:9053/' /opt/php53/etc/php-fpm.conf
+#listen = 127.0.0.1:9000
+#se instalo la version de php 5.3/
+cd /opt/perfectserver/
+echo php5.3 fin
+date >> servertime.txt
+
+
+cd /opt/perfectserver/phpsources/
+tar xzvf php-5.4.38.tar.gz
+chmod 777 -R php-5.4.38/
+cd php-5.4.38/
+###########php5.4#############
+#compile php 5.4.38
+./configure --prefix=/opt/php54 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+echo listo para build
+sleep 10
+#make and install
+make && make install
+echo Build completo
+#copiando archivos para iniciar el servicio
+cd sapi/fpm
+cp init.d.php-fpm /etc/init.d/php54
+chmod 775 /etc/init.d/php54
+sleep 10
+mv /opt/php54/etc/php-fpm.conf.default /opt/php54/etc/php-fpm.conf 
+sed -i 's/^listen =.*/listen = 127.0.0.1:9054/' /opt/php54/etc/php-fpm.conf
+#compilacion de php 5.4 listo.
+cd /opt/perfectserver/
+echo php5.4 fin
+date >> servertime.txt
+#########################################
+#build de php 5.5
+cd /opt/perfectserver/phpsources/
+tar xzvf php-5.5.5.tar.gz
+chmod 777 -R php-5.5.5/
+cd php-5.5.5/
+#compile php 5.4.38
+./configure --prefix=/opt/php55 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+echo listo para build
+sleep 10
+make && make install
+##
+#copiando archivos para iniciar el servicio
+cd sapi/fpm
+cp init.d.php-fpm /etc/init.d/php55
+#ls -al
+chmod 775 /etc/init.d/php55
+echo Build completo
+sleep 10
+mv /opt/php55/etc/php-fpm.conf.default /opt/php55/etc/php-fpm.conf 
+sed -i 's/^listen =.*/listen = 127.0.0.1:9055/' /opt/php55/etc/php-fpm.conf
+cd /opt/perfectserver/
+echo php5.5 fin
+date >> servertime.txt
+#######################
+#######php 5.6#########
+cd /opt/perfectserver/phpsources/
+tar xzvf php-5.6.6.tar.gz
+chmod 777 -R php-5.6.6/
+cd php-5.6.6/
+#compile php 5.4.38
+./configure --prefix=/opt/php56 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+echo listo para build
+sleep 10
+make && make install
+##
+#copiando archivos para iniciar el servicio
+cd sapi/fpm
+cp init.d.php-fpm /etc/init.d/php56
+#ls -al
+chmod 775 /etc/init.d/php56
+echo Build completo
+sleep 10
+mv /opt/php56/etc/php-fpm.conf.default /opt/php56/etc/php-fpm.conf 
+sed -i 's/^listen =.*/listen = 127.0.0.1:9056/' /opt/php56/etc/php-fpm.conf
+cd /opt/perfectserver/
+echo php5.6 fin
+date >> servertime.txt
+#############Installing NGINX#################
+####VERSION 1.7.10############################
+#echo Please, enter your name
+#read NAME
+cd /opt/perfectserver/
+echo Inicio nginx
+date >> servertime.txt
+cd /opt/perfectserver/nginxsource/
+tar xzvf nginx-1.7.10.tar.gz
+cd nginx-1.7.10/
+
+./configure \
+--user=apache                          \
+--group=apache                         \
+--prefix=/etc/nginx                   \
+--sbin-path=/usr/sbin/nginx           \
+--conf-path=/etc/nginx/nginx.conf     \
+--pid-path=/var/run/nginx.pid         \
+--lock-path=/var/run/nginx.lock       \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module        \
+--with-http_stub_status_module        \
+--with-http_ssl_module                \
+--with-pcre                           \
+--with-file-aio                       \
+--with-http_realip_module             \
+--without-http_scgi_module            \
+--without-http_uwsgi_module           \
+--with-http_fastcgi_module
+
+echo se configuro
+sleep 10
+
+make && make install
+
+
+
+# Add The Reconnect Script Into Forge Directory
+
+cat > /etc/init.d/nginx << EOF
+#!/bin/sh
+#
+# nginx - this script starts and stops the nginx daemon
+#
+# chkconfig:   - 85 15
+# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \
+#               proxy and IMAP/POP3 proxy server
+# processname: nginx
+# config:      /etc/nginx/nginx.conf
+# pidfile:     /var/run/nginx.pid
+# user:        nginx
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
+nginx="/usr/sbin/nginx"
+prog=$(basename $nginx)
+
+NGINX_CONF_FILE="/etc/nginx/nginx.conf"
+
+lockfile=/var/run/nginx.lock
+
+start() {
+    [ -x $nginx ] || exit 5
+    [ -f $NGINX_CONF_FILE ] || exit 6
+    echo -n $"Starting $prog: "
+    daemon $nginx -c $NGINX_CONF_FILE
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    configtest || return $?
+    stop
+    start
+}
+
+reload() {
+    configtest || return $?
+    echo -n $"Reloading $prog: "
+    killproc $nginx -HUP
+    RETVAL=$?
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+configtest() {
+  $nginx -t -c $NGINX_CONF_FILE
+}
+
+rh_status() {
+    status $prog
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart|configtest)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+            ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"
+        exit 2
+esac
+EOF
+
+echo se configuro archivo de inicio del nginx
+sleep 5
+
+chmod +x /etc/init.d/nginx
+
+#add nginx to service
+chkconfig --add nginx
+chkconfig --level 345 nginx on
+
+
+## seed de la configuracion del bucket
+sed -i 's/^types_hash_bucket_size.*/types_hash_bucket_size 64;/' /etc/nginx/nginx.conf
+
+sed -i 's/^server_names_hash_bucket_size.*/server_names_hash_bucket_size 128;/' /etc/nginx/nginx.conf
+######configuracion automatica de los servicios phpfmp de php instalados
+echo Se va a configurar para que inicien los servicios automaticamente de php fmp
+sleep 5
+
+
+##Binding para iniciar php 5.4
+chkconfig --add php53
+chkconfig --level 345 php53 on
+#
+chkconfig --add php54
+chkconfig --level 345 php54 on
+#
+chkconfig --add php55
+chkconfig --level 345 php55 on
+#
+chkconfig --add php56
+chkconfig --level 345 php56 on
