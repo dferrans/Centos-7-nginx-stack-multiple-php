@@ -268,8 +268,6 @@ chmod 777 -R /var/www/html/test3/
 chmod 777 -R /var/www/html/test4/
 #Create file into folder 
 
- and 
-
 ### iniciar todos los servicios
 service php53 start
 service php54 start
@@ -277,14 +275,11 @@ service php55 start
 service php56 start
 service nginx start
 service nginx restart
-
 ###install composer
 cd /opt/perfectserver/nginxsource/
 curl -sS https://getcomposer.org/installer | php  
 mv composer.phar /usr/local/bin/composer  
 echo composer installed
-#install larvel installer globally
-composer global require "laravel/installer=~1.1"
-#disable firewalld
+#Disable firewalld to allow SERVICES
 systemctl disable firewalld
 systemctl stop firewalld
