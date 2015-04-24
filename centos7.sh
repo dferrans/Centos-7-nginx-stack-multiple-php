@@ -267,7 +267,8 @@ chmod 777 -R /var/www/html/test2/
 chmod 777 -R /var/www/html/test3/
 chmod 777 -R /var/www/html/test4/
 #Create file into folder 
-
+#start maria db as service
+systemctl enable mariadb.service
 ### iniciar todos los servicios
 service php53 start
 service php54 start
