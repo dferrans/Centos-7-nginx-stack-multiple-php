@@ -206,7 +206,8 @@ mkdir /var/www/html/test
 echo "<?php phpinfo();?>" > /var/www/html/test/index.php
 chmod 777 -R /var/www/html/test/
 #Create file into folder 
-
+#Start maria DB at boot
+systemctl enable mariadb.service
 
 
 ### iniciar todos los servicios
