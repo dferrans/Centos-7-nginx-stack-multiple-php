@@ -308,3 +308,4 @@ echo composer installed
 #Disable firewalld to allow SERVICES
 systemctl disable firewalld
 systemctl stop firewalld
+#you might want to run mysql_secure_installation to set up maria db root password. 
