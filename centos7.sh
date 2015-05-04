@@ -12,7 +12,7 @@ echo Relax and take a cup of coffee.
 sleep 10
 yum update -y
 #installing network tools (minimal install does not have it)
-yum install net-tools
+yum install net-tools -y
 #installing epel repo
 yum install epel-release -y
 #updating again the system
