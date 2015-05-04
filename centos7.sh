@@ -268,7 +268,7 @@ cat nginxhost54.txt > /etc/nginx/sites-enabled/test2.conf
 cat nginxhost55.txt > /etc/nginx/sites-enabled/test3.conf
 cat nginxhost56.txt > /etc/nginx/sites-enabled/test4.conf
 #Drupal 6-7 site configuration
-cat nginxhost56.txt > /etc/nginx/sites-enabled/drupal6-7.conf
+cat nginxdrupal.txt > /etc/nginx/sites-enabled/drupal6-7.conf
 #configurar la carpeta de los hosts por defecto
 cd /opt/perfectserver/nginxsource/
 mkdir /var/www/html/test1
