@@ -90,6 +90,9 @@ sleep 10
 mv /opt/php53/etc/php-fpm.conf.default /opt/php53/etc/php-fpm.conf 
 sed -i 's/^listen =.*/listen = 127.0.0.1:9053/' /opt/php53/etc/php-fpm.conf
 #compilacion de php 5.3 listo.
+#copy php config to filder lib
+cp /opt/perfectserver/phpsources/php-5.3.29/php.ini-production /opt/php53/lib/php.ini
+chmod 775 /opt/php53/lib/php.ini
 echo PHP 53 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
 read name
 
@@ -115,6 +118,9 @@ mv /opt/php54/etc/php-fpm.conf.default /opt/php54/etc/php-fpm.conf
 sed -i 's/^listen =.*/listen = 127.0.0.1:9054/' /opt/php54/etc/php-fpm.conf
 #compilacion de php 5.4 listo.
 cd /opt/perfectserver/
+#copy php.ini to folder
+cp /opt/perfectserver/phpsources/php-5.4.38/php.ini-production /opt/php54/lib/php.ini
+chmod 775 /opt/php54/lib/php.ini
 echo php5.4 fin
 date >> servertime.txt
 echo se compilo php 5.4
@@ -144,6 +150,8 @@ sed -i 's/^listen =.*/listen = 127.0.0.1:9055/' /opt/php55/etc/php-fpm.conf
 cd /opt/perfectserver/
 echo php5.5 fin
 date >> servertime.txt
+cp /opt/perfectserver/phpsources/php-5.5.5/php.ini-production /opt/php55/lib/php.ini
+chmod 777 /opt/php55/lib/php.ini
 echo PHP 55 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
 read name
 #######################
@@ -168,6 +176,8 @@ sleep 10
 mv /opt/php56/etc/php-fpm.conf.default /opt/php56/etc/php-fpm.conf 
 sed -i 's/^listen =.*/listen = 127.0.0.1:9056/' /opt/php56/etc/php-fpm.conf
 cd /opt/perfectserver/
+cp /opt/perfectserver/phpsources/php-5.6.6/php.ini-production /opt/php56/lib/php.ini
+chmod 777 /opt/php56/lib/php.ini
 echo php5.6 fin
 date >> servertime.txt
 echo PHP 56 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
