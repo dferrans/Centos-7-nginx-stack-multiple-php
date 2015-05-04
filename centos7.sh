@@ -3,7 +3,7 @@
 yum install git -y
 # 
 mkdir /opt/perfectserver/ && cd /opt/perfectserver/
-git clone -b https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git development .
+git clone -b development https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git .
 #download repo
 #cd /opt/perfectserver/
 date > servertime.txt
