@@ -1,0 +1,46 @@
+#
+# These groups are read by MariaDB server.
+# Use it for options that only the server (but not clients) should see
+#
+# See the examples of server my.cnf files in /usr/share/mysql/
+#
+
+# this is read by the standalone daemon and embedded servers
+[server]
+
+# this is only for the mysqld standalone daemon
+[mysqld]
+bind-address            = 127.0.0.1
+key_buffer              = 16M
+key_buffer_size         = 32M
+max_allowed_packet      = 16M
+thread_stack            = 128K
+thread_cache_size       = 64
+query_cache_limit       = 8M
+query_cache_size        = 64M
+query_cache_type        = 1
+join_buffer_size        = 512K
+max_connections         = 150
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+
+[isamchk]
+key_buffer              = 16M 
+
+# this is only for embedded server
+[embedded]
+
+# This group is only read by MariaDB-5.5 servers.
+# If you use the same .cnf file for MariaDB of different versions,
+# use this group for options that older servers don't understand
+[mysqld-5.5]
+
+# These two groups are only read by MariaDB servers, not by MySQL.
+# If you use the same .cnf file for MySQL and MariaDB,
+# you can put MariaDB-only options here
+[mariadb]
+
+[mariadb-5.5]
+

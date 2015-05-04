@@ -1,6 +1,11 @@
 #!/bin/bash
-#Making sure that system is up-to-date
-cd /opt/perfectserver/
+#Making sure that system is up-to-date.
+yum install git -y
+# 
+mkdir /opt/perfectserver/ && cd /opt/perfectserver/
+git clone -b https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git development .
+#download repo
+#cd /opt/perfectserver/
 date > servertime.txt
 echo This script will download all the depencencies to build php from source. depending on your system resources it could take up to 30 minutes.
 echo Relax and take a cup of coffee.
@@ -262,11 +267,15 @@ cat nginxhost53.txt > /etc/nginx/sites-enabled/test1.conf
 cat nginxhost54.txt > /etc/nginx/sites-enabled/test2.conf
 cat nginxhost55.txt > /etc/nginx/sites-enabled/test3.conf
 cat nginxhost56.txt > /etc/nginx/sites-enabled/test4.conf
+#Drupal 6-7 site configuration
+cat nginxhost56.txt > /etc/nginx/sites-enabled/drupal6-7.conf
 #configurar la carpeta de los hosts por defecto
 cd /opt/perfectserver/nginxsource/
 mkdir /var/www/html/test1
 mkdir /var/www/html/test2
 mkdir /var/www/html/test3
+mkdir /var/www/html/drupal
+#Make drupal folder
 mkdir /var/www/html/test4
 echo "<?php phpinfo();?>" > /var/www/html/test1/index.php
 echo "<?php phpinfo();?>" > /var/www/html/test2/index.php
@@ -278,7 +287,12 @@ chmod 777 -R /var/www/html/test3/
 chmod 777 -R /var/www/html/test4/
 #Create file into folder 
 #start maria db as service
+#/etc/my.cnf.d
+service mariadb stop
+cd /opt/perfectserver/nginxsource/
+cat mariadbdrupal.txt > /etc/my.cnf.d/server.cnf
 systemctl enable mariadb.service
+service mariadb start
 ### iniciar todos los servicios
 service php53 start
 service php54 start
