@@ -29,8 +29,8 @@ yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpn
 yum install httpd php php-xml php-mbstring php-mcrypt php-pdo -y 
 yum install php-devel php-pear mysql-devel httpd-devel -y
 #pecl install pdo
-echo configuracion basica
-read name
+echo Basic configuration complete
+#read name
 
 #inicio del php 5.3.29
 ####################################
@@ -86,7 +86,7 @@ cd php-5.3.29/
 ######Make and install
 #make and install
 make && make install
-echo Build completo
+echo PHP build installing now...
 #copiando archivos para iniciar el servicio
 cd sapi/fpm
 cp init.d.php-fpm /etc/init.d/php53
@@ -98,8 +98,8 @@ sed -i 's/^listen =.*/listen = 127.0.0.1:9053/' /opt/php53/etc/php-fpm.conf
 #copy php config to filder lib
 cp /opt/perfectserver/phpsources/php-5.3.29/php.ini-production /opt/php53/lib/php.ini
 chmod 775 /opt/php53/lib/php.ini
-echo PHP 53 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
-read name
+echo PHP 5.3 Installed, now starting php 5.4....
+#read name
 
 ###########php5.4##########################################################
 ###########################################################################
@@ -113,7 +113,7 @@ echo listo para build
 sleep 10
 #make and install
 make && make install
-echo Build completo
+echo PHP 5.4 BUILD COMPLETE...
 #copiando archivos para iniciar el servicio
 cd sapi/fpm
 cp init.d.php-fpm /etc/init.d/php54
@@ -128,8 +128,8 @@ cp /opt/perfectserver/phpsources/php-5.4.38/php.ini-production /opt/php54/lib/ph
 chmod 775 /opt/php54/lib/php.ini
 echo php5.4 fin
 date >> servertime.txt
-echo se compilo php 5.4
-read time
+echo PHP 5.4 installed succesfully.
+#read time
 #########################################
 ##########################################
 #build de php 5.5
@@ -139,7 +139,7 @@ chmod 777 -R php-5.5.5/
 cd php-5.5.5/
 #compile php 5.4.38
 ./configure --prefix=/opt/php55 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
-echo listo para build
+echo READY TO BUILD PHP 5.5
 sleep 10
 make && make install
 ##
@@ -148,7 +148,7 @@ cd sapi/fpm
 cp init.d.php-fpm /etc/init.d/php55
 #ls -al
 chmod 775 /etc/init.d/php55
-echo Build completo
+echo BUILD COMPLETE...
 sleep 10
 mv /opt/php55/etc/php-fpm.conf.default /opt/php55/etc/php-fpm.conf 
 sed -i 's/^listen =.*/listen = 127.0.0.1:9055/' /opt/php55/etc/php-fpm.conf
@@ -157,8 +157,8 @@ echo php5.5 fin
 date >> servertime.txt
 cp /opt/perfectserver/phpsources/php-5.5.5/php.ini-production /opt/php55/lib/php.ini
 chmod 777 /opt/php55/lib/php.ini
-echo PHP 55 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
-read name
+echo PHP 5.5 installed succesfully.
+#read name
 #######################
 #######php 5.6#########
 cd /opt/perfectserver/phpsources/
@@ -167,7 +167,7 @@ chmod 777 -R php-5.6.6/
 cd php-5.6.6/
 #compile php 5.4.38
 ./configure --prefix=/opt/php56 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-mysql --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
-echo listo para build
+echo PHP 5.6 MAKE COMPLETE COMPILING SOURCE.
 sleep 10
 make && make install
 ##
@@ -176,7 +176,7 @@ cd sapi/fpm
 cp init.d.php-fpm /etc/init.d/php56
 #ls -al
 chmod 775 /etc/init.d/php56
-echo Build completo
+echo PHP 5.6 COMPLETE....
 sleep 10
 mv /opt/php56/etc/php-fpm.conf.default /opt/php56/etc/php-fpm.conf 
 sed -i 's/^listen =.*/listen = 127.0.0.1:9056/' /opt/php56/etc/php-fpm.conf
@@ -185,8 +185,8 @@ cp /opt/perfectserver/phpsources/php-5.6.6/php.ini-production /opt/php56/lib/php
 chmod 777 /opt/php56/lib/php.ini
 echo php5.6 fin
 date >> servertime.txt
-echo PHP 56 LISTO Y COMPILADO PRESIONA ENTER PARA CONTINUAR
-read name
+echo PHP 5.6 INSTALLED.
+#read name
 #############Installing NGINX#################
 ####VERSION 1.7.10############################
 #echo Please, enter your name
@@ -218,14 +218,14 @@ cd nginx-1.7.10/
 --without-http_uwsgi_module           
 
 
-echo se configuro
+echo NGINX SERVICE CONFIGURE OK....
 sleep 10
 
 make && make install
 # Add The Reconnect Script Into Forge Directory
 cd /opt/perfectserver/nginxsource/
 cat nginxstart.txt > /etc/init.d/nginx 
-echo se configuro archivo de inicio del nginx
+echo SETING UP NGINX INIT FILE...
 sleep 5
 chmod +x /etc/init.d/nginx
 
@@ -237,7 +237,7 @@ sed -i 's/^types_hash_bucket_size.*/types_hash_bucket_size 64;/' /etc/nginx/ngin
 
 sed -i 's/^server_names_hash_bucket_size.*/server_names_hash_bucket_size 128;/' /etc/nginx/nginx.conf
 ######configuracion automatica de los servicios phpfmp de php instalados
-echo Se va a configurar para que inicien los servicios automaticamente de php fmp
+echo AUTO START PHP-FPM 5.3 5.4 5.5 AND 5.6.
 sleep 5
 
 
@@ -304,7 +304,7 @@ service nginx restart
 cd /opt/perfectserver/nginxsource/
 curl -sS https://getcomposer.org/installer | php  
 mv composer.phar /usr/local/bin/composer  
-echo composer installed
+echo PHP COMPOSER INSTALLED....
 #Disable firewalld to allow SERVICES
 systemctl disable firewalld
 systemctl stop firewalld
