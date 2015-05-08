@@ -63,7 +63,7 @@ server {
         }
 	
 	 location ~ \.php$ {
-            root           /var/www/html/test2;
+            root           /var/www/html/drupal;
             fastcgi_pass   127.0.0.1:9054;
             fastcgi_index  index.php;
             fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
