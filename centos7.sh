@@ -309,3 +309,11 @@ echo PHP COMPOSER INSTALLED....
 systemctl disable firewalld
 systemctl stop firewalld
 #you might want to run mysql_secure_installation to set up maria db root password. 
+#if you need NODEJS. from source UNCOMMENT FOLLOWING LINES
+#wget http://nodejs.org/dist/v0.10.30/node-v0.10.30.tar.gz
+#tar xzvf node-v* && cd node-v*
+#./configure
+#make
+#make install
+#node --version
+
