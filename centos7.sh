@@ -321,3 +321,5 @@ systemctl stop firewalld
 #userfull when using composer or other file
 ln -s /opt/php55/bin/php /usr/local/bin/php55
 ln -s /opt/php56/bin/php /usr/local/bin/php56
+#aglio to document api
+npm install -g aglio
