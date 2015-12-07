@@ -1,6 +1,6 @@
 #!/bin/bash
 #Making sure that system is up-to-date
-cd /opt/perfectserver/
+#cd /opt/perfectserver/
 date > servertime.txt
 echo This script will download all the depencencies to build php from source. depending on your system resources it could take up to 30 minutes.
 echo Relax and take a cup of coffee.
@@ -20,7 +20,7 @@ yum install mariadb-server mariadb-client wget curl nano -y
 yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpng-devel libXpm-devel gmp-devel libc-client-devel openldap-devel unixODBC-devel postgresql-devel sqlite-devel net-snmp-devel libxslt-devel pcre-devel mysql-devel postgresql-devel libxslt-devel mariadb-client freetype-devel.x86_64 -y
 #install httpd server to create APACHE USER TO RUN PHP-FPM
 #depencendies for nginx
-#yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
+yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
 yum install httpd -y 
 
 echo instalacion de dependencias
@@ -131,8 +131,8 @@ cd /opt/perfectserver/
 echo Inicio nginx
 date >> servertime.txt
 cd /opt/perfectserver/nginxsource/
-tar xzvf nginx-1.9.7.tar.gz
-cd nginx-1.9.7/
+tar xzvf nginx-1.7.10.tar.gz
+cd nginx-1.7.10/
 
 ./configure \
 --user=apache                          \
