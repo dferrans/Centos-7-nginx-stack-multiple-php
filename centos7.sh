@@ -233,8 +233,8 @@ cd /opt/perfectserver/
 echo Inicio nginx
 date >> servertime.txt
 cd /opt/perfectserver/nginxsource/
-tar xzvf nginx-1.7.10.tar.gz
-cd nginx-1.7.10/
+tar xzvf nginx-1.10.0.tar.gz
+cd nginx-1.10.0/
 
 ./configure \
 --user=apache                          \
