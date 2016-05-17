@@ -2,8 +2,8 @@
 #Making sure that system is up-to-date.
 yum install git -y
 # 
-mkdir /opt/perfectserver/ && cd /opt/perfectserver/
-git clone -b development https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git .
+#mkdir /opt/perfectserver/ && cd /opt/perfectserver/
+#git clone -b development https://github.com/dferrans/Centos-7-nginx-stack-multiple-php.git .
 #download repo
 #cd /opt/perfectserver/
 date > servertime.txt
@@ -192,9 +192,9 @@ echo PHP 5.6 INSTALLED.
 #build php 7.0
 #read name
 cd /opt/perfectserver/phpsources/
-tar xzvf php-7.0.0.tar.gz
-chmod 777 -R php-7.0.0/
-cd php-7.0.0/
+tar xzvf php-7.0.6.tar.gz
+chmod 777 -R php-7.0.6/
+cd php-7.0.6/
 ./configure --prefix=/opt/php7 --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex  --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=apache --with-fpm-group=apache --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
 #with mysql deprecated en php7
 make && make install
@@ -287,24 +287,22 @@ mkdir /etc/nginx/sites-available
 mkdir /etc/nginx/sites-enabled
 cd /opt/perfectserver/nginxsource/
 cat nginxdefault.txt > /etc/nginx/nginx.conf
-cat nginxhost53.txt > /etc/nginx/sites-enabled/test1.conf
-cat nginxhost54.txt > /etc/nginx/sites-enabled/test2.conf
-cat nginxhost55.txt > /etc/nginx/sites-enabled/test3.conf
-cat nginxhost56.txt > /etc/nginx/sites-enabled/test4.conf
 #Drupal 6-7 site configuration
-cat nginxdrupal.txt > /etc/nginx/sites-enabled/drupal6-7.conf
+cat nginxhost.txt > /etc/nginx/sites-enabled/drupal6-7.conf
 #configurar la carpeta de los hosts por defecto
 cd /opt/perfectserver/nginxsource/
-mkdir /var/www/html/test1
-mkdir /var/www/html/test2
-mkdir /var/www/html/test3
-mkdir /var/www/html/drupal
+mkdir /var/www/html/53
+mkdir /var/www/html/54
+mkdir /var/www/html/55
+mkdir /var/www/html/56
+mkdir /var/www/html/7
 #Make drupal folder
 mkdir /var/www/html/test4
-echo "<?php phpinfo();?>" > /var/www/html/test1/index.php
-echo "<?php phpinfo();?>" > /var/www/html/test2/index.php
-echo "<?php phpinfo();?>" > /var/www/html/test3/index.php
-echo "<?php phpinfo();?>" > /var/www/html/test4/index.php
+echo "<?php phpinfo();?>" > /var/www/html/53/index.php
+echo "<?php phpinfo();?>" > /var/www/html/54/index.php
+echo "<?php phpinfo();?>" > /var/www/html/55/index.php
+echo "<?php phpinfo();?>" > /var/www/html/56/index.php
+echo "<?php phpinfo();?>" > /var/www/html/7/index.php
 chmod 777 -R /var/www/html/test1/
 chmod 777 -R /var/www/html/test2/
 chmod 777 -R /var/www/html/test3/
@@ -330,21 +328,26 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer  
 echo PHP COMPOSER INSTALLED....
 #Disable firewalld to allow SERVICES
-systemctl disable firewalld
-systemctl stop firewalld
+#systemctl disable firewalld
+#systemctl stop firewalld
+echo installing node js...
 #you might want to run mysql_secure_installation to set up maria db root password. 
 #if you need NODEJS. from source UNCOMMENT FOLLOWING LINES
-#wget http://nodejs.org/dist/v0.12.2/node-v0.12.2.tar.gz
-#tar xzvf node-v* && cd node-v*
-#./configure
-#make
-#make install
-#node --version
+wget https://nodejs.org/dist/v4.4.4/node-v4.4.4.tar.gz
+tar xzvf node-v* && cd node-v*
+./configure
+make
+make install
+node --version
 #symlinks to php Binary
 #usage php55 (command), php56 (comand)
 #userfull when using composer or other file
+echo node js installed ... creating php symlinks...
+ln -s /opt/php53/bin/php /usr/local/bin/php53
+ln -s /opt/php54/bin/php /usr/local/bin/php54
 ln -s /opt/php55/bin/php /usr/local/bin/php55
 ln -s /opt/php56/bin/php /usr/local/bin/php56
+ln -s /opt/php7/bin/php /usr/local/bin/php7
 #aglio to document api
 npm install -g aglio
 #usage
