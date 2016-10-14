@@ -208,7 +208,15 @@ mv /opt/php7/etc/php-fpm.d/www.conf.default /opt/php7/etc/php-fpm.d/www.conf
 sed -i 's/^listen =.*/listen = 127.0.0.1:9070/' /opt/php7/etc/php-fpm.d/www.conf
 cp /opt/perfectserver/phpsources/php-7.0.0/php.ini-production /opt/php7/lib/php.ini
 chmod 777 /opt/php7/lib/php.ini
-
+##Install SSH2 libraries.
+cd /opt/php54
+./pecl install -f ssh2
+cd /opt/php54/lib
+#seed to replace and add exte ssh
+sed -i -e 's/;extension=php_xsl.dll/extension=ssh2.so/g' /opt/php54/lib/php.ini
+sed -i -e 's/;extension=php_xsl.dll/extension=ssh2.so/g' /opt/php55/lib/php.ini
+sed -i -e 's/;extension=php_xsl.dll/extension=ssh2.so/g' /opt/php56/lib/php.ini
+#sed -i -e 's/;extension=php_xsl.dll/extension=ssh2.so/g' /opt/php7/lib/php.ini
 ######configuracion automatica de los servicios phpfmp de php instalados
 echo AUTO START PHP-FPM 5.3 5.4 5.5 5.6 AND 7
 ##Binding para iniciar php 5.4
