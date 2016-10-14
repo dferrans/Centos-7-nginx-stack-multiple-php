@@ -28,6 +28,8 @@ yum install libmcrypt-devel bzip2-devel curl-devel db4-devel libjpeg-devel libpn
 #yum install gcc gcc-c++ make zlib-devel pcre-devel openssl-devel -y
 yum install httpd php php-xml php-mbstring php-mcrypt php-pdo -y 
 yum install php-devel php-pear mysql-devel httpd-devel -y
+#Dependencies to build ssh libraries for php
+yum install gcc php-devel php-pear libssh2 libssh2-devel -y
 #pecl install pdo
 echo Basic configuration complete
 #read name
