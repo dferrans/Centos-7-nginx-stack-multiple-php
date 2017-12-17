@@ -2,6 +2,26 @@
 #Making sure that system is up-to-date.
 #yum install git -y
 apt-get upgrade
+########################
+#######php 7#########
+#build php 7.0
+#read name
+cd /opt/perfectserver/phpsources/
+tar xzvf php-7.2.0.tar.gz
+chmod 777 -R php-7.2.0/
+cd php-7.2.0/
+./configure --prefix=/opt/php7  --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd  --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex  --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=www-data --with-fpm-group=www-data --with-libdir=lib64     --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+#with mysql deprecated en php7
+make && make install
+cd sapi/fpm
+cp init.d.php-fpm /etc/init.d/php7
+chmod 775 /etc/init.d/php7
+mv /opt/php7/etc/php-fpm.conf.default /opt/php7/etc/php-fpm.conf 
+mv /opt/php7/etc/php-fpm.d/www.conf.default /opt/php7/etc/php-fpm.d/www.conf
+sed -i 's/^listen =.*/listen = 127.0.0.1:9070/' /opt/php7/etc/php-fpm.d/www.conf
+cp /opt/perfectserver/phpsources/php-7.0.0/php.ini-production /opt/php7/lib/php.ini
+chmod 777 /opt/php7/lib/php.ini
+exit
 #read name
 ########################
 #######php 5.6#########
