@@ -100,7 +100,7 @@ make
 sudo make install
 mkdir -p /var/lib/nginx && sudo nginx -t
 #https://www.vultr.com/docs/how-to-compile-nginx-from-source-on-ubuntu-16-04
-#
+#sudo systemctl start nginx.service && sudo systemctl enable nginx.service
 sudo cp /opt/perfectserver/nginxsource/nginx.service  /etc/systemd/system/nginx.service
 cd nginx-1.13.1
 #echo Inicio nginx
